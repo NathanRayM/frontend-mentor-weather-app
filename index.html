@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+      rel="stylesheet"
+    />
+    <title>Weather App</title>
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!--Start Header Section-->
+    <header>
+      <!--header left-->
+      <div class="header__left">
+        <img class="header-logo" src="images/logo.svg" alt="" />
+      </div>
+      <!--header right-->
+      <div class="header__right">
+        <button
+          class="unit-menu"
+          aria-expanded="false"
+          aria-controls="unit-panel"
+        >
+          <img class="unit-icon" src="images/icon-units.svg" alt="" />
+          Units
+          <img class="dropdown-icon" src="images/icon-dropdown.svg" alt="" />
+        </button>
+
+        <div id="unit-panel" class="unit-panel hidden">
+          <button class="units-type-button">Switch to Imperial</button>
+
+          <fieldset>
+            <legend>Temperature</legend>
+            <label
+              >Celsius (°C)<input
+                class="celsius-input"
+                value="celsius"
+                type="radio"
+                name="temp"
+                checked
+            /></label>
+            <label>
+              Fahrenheit (°F)<input
+                class="fahrenheit-input"
+                value="fahrenheit"
+                type="radio"
+                name="temp"
+            /></label>
+          </fieldset>
+
+          <hr />
+
+          <fieldset>
+            <legend>Wind Speed</legend>
+            <label>
+              km/h<input
+                class="kilometer-input"
+                value="kilometer"
+                type="radio"
+                name="wind"
+                checked
+            /></label>
+            <label>
+              mph<input
+                class="milesperhour-input"
+                value="milesperhour"
+                type="radio"
+                name="wind"
+            /></label>
+          </fieldset>
+
+          <hr />
+
+          <fieldset>
+            <legend>Precipitation</legend>
+            <label>
+              Millimeters(mm)<input
+                class="millimeters-input"
+                value="millimeters"
+                type="radio"
+                name="precipitation"
+                checked
+              />
+            </label>
+            <label
+              >inches<input
+                class="inches-input"
+                value="inches"
+                type="radio"
+                name="precipitation"
+            /></label>
+          </fieldset>
+        </div>
+      </div>
+    </header>
+    <!--End Header Section-->
+    <!--Start Main Section-->
+    <main class="main">
+      <!--Start search section-->
+      <section id="search" class="search">
+        <h1 class="search__heading">How's the sky looking today?</h1>
+        <div class="search__container">
+          <div class="search__input--wrapper">
+            <label class="search__input--label">
+              <svg
+                class="search-icon"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="21"
+                height="21"
+                fill="none"
+                viewBox="0 0 21 21"
+              >
+                <path
+                  fill=""
+                  d="M19.844 18.82c.195.196.195.508 0 .664l-.899.899c-.156.195-.468.195-.664 0l-4.726-4.727a.63.63 0 0 1-.117-.351v-.508c-1.446 1.21-3.282 1.953-5.313 1.953A8.119 8.119 0 0 1 0 8.625C0 4.172 3.633.5 8.125.5c4.453 0 8.125 3.672 8.125 8.125 0 2.031-.781 3.906-1.992 5.313h.508c.117 0 .234.078.351.156l4.727 4.726ZM8.125 14.875a6.243 6.243 0 0 0 6.25-6.25c0-3.438-2.813-6.25-6.25-6.25a6.243 6.243 0 0 0-6.25 6.25 6.219 6.219 0 0 0 6.25 6.25Z"
+                />
+              </svg>
+              <input
+                type="search"
+                name="search"
+                id="search-input"
+                class="search-input"
+                autocomplete="off"
+                placeholder="Search for a place..."
+              />
+            </label>
+            <ul class="search-suggestions-panel hidden"></ul>
+          </div>
+          <button class="search__button">Search</button>
+        </div>
+      </section>
+
+      <section class="error-state hidden" aria-live="polite">
+        <p class="error-message"></p>
+      </section>
+      <!--End search section-->
+      <!--Begin weather section-->
+
+      <section class="weather">
+        <div class="weather-grid">
+          <div class="weather__current">
+            <div class="weather__current--info">
+              <h2 class="weather__current--location">
+                <span class="weather__current--city"></span>
+                <span class="weather__current--country"></span>
+              </h2>
+              <p class="weather__current--date"></p>
+            </div>
+            <div class="weather__current--forcast">
+              <img class="forcast-image" src="" alt="" />
+              <p class="current-temp"></p>
+            </div>
+          </div>
+          <div class="weather__details">
+            <div class="weather__detail">
+              <p class="detail-title">Feels Like</p>
+              <p id="feels-like" class="detail-data"></p>
+            </div>
+            <div class="weather__detail">
+              <p class="detail-title">Humidity</p>
+              <p id="humidity" class="detail-data"></p>
+            </div>
+            <div class="weather__detail">
+              <p class="detail-title">Wind</p>
+              <p id="wind" class="detail-data"></p>
+            </div>
+            <div class="weather__detail">
+              <p class="detail-title">Precipitation</p>
+              <p id="precipitation" class="detail-data"></p>
+            </div>
+          </div>
+          <div class="weather__daily">
+            <h3 class="weather__daily--title">Daily forecast</h3>
+            <div class="weather__daily--grid">
+              <div class="weather-day-container">
+                <p class="weather-day">Tue</p>
+                <img class="day-image" src="" alt="" />
+                <div class="day-temp-container">
+                  <p class="day-data day-temp-max"></p>
+                  <p class="day-data day-temp-min"></p>
+                </div>
+              </div>
+              <div class="weather-day-container">
+                <p class="weather-day">Wed</p>
+                <img class="day-image" src="" alt="" />
+                <div class="day-temp-container">
+                  <p class="day-data day-temp-max"></p>
+                  <p class="day-data day-temp-min"></p>
+                </div>
+              </div>
+              <div class="weather-day-container">
+                <p class="weather-day">Thu</p>
+                <img class="day-image" src="" alt="" />
+                <div class="day-temp-container">
+                  <p class="day-data day-temp-max"></p>
+                  <p class="day-data day-temp-min"></p>
+                </div>
+              </div>
+              <div class="weather-day-container">
+                <p class="weather-day">Fri</p>
+                <img class="day-image" src="" alt="" />
+                <div class="day-temp-container">
+                  <p class="day-data day-temp-max"></p>
+                  <p class="day-data day-temp-min"></p>
+                </div>
+              </div>
+              <div class="weather-day-container">
+                <p class="weather-day">Sat</p>
+                <img class="day-image" src="" alt="" />
+                <div class="day-temp-container">
+                  <p class="day-data day-temp-max"></p>
+                  <p class="day-data day-temp-min"></p>
+                </div>
+              </div>
+              <div class="weather-day-container">
+                <p class="weather-day">Sun</p>
+                <img class="day-image" src="" alt="" />
+                <div class="day-temp-container">
+                  <p class="day-data day-temp-max"></p>
+                  <p class="day-data day-temp-min"></p>
+                </div>
+              </div>
+              <div class="weather-day-container">
+                <p class="weather-day">Mon</p>
+                <img class="day-image" src="" alt="" />
+                <div class="day-temp-container">
+                  <p class="day-data day-temp-max"></p>
+                  <p class="day-data day-temp-min"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="weather__hourly">
+            <div class="weather__hourly--header">
+              <h3 class="weather__hourly--title">Hourly forecast</h3>
+              <button
+                class="weather__hourly--menu"
+                aria-expanded="false"
+                aria-controls="hourly-panel"
+              >
+                <p class="weather__hourly--label"></p>
+                <img
+                  class="hourly-dropdown-icon"
+                  src="images/icon-dropdown.svg"
+                  alt=""
+                />
+              </button>
+              <ul id="hourly-panel" class="hourly-panel hidden">
+                <li class="panel-day"></li>
+                <li class="panel-day"></li>
+                <li class="panel-day"></li>
+                <li class="panel-day"></li>
+                <li class="panel-day"></li>
+                <li class="panel-day"></li>
+                <li class="panel-day"></li>
+              </ul>
+            </div>
+            <div class="weather__hourly--grid">
+              <div class="weather-hour">
+                <div class="hour-data">
+                  <img class="hour-icon" src="" alt="" />
+                  <p class="hour-time"></p>
+                </div>
+                <p class="hour-degrees"></p>
+              </div>
+              <div class="weather-hour">
+                <div class="hour-data">
+                  <img class="hour-icon" src="" alt="" />
+                  <p class="hour-time"></p>
+                </div>
+                <p class="hour-degrees"></p>
+              </div>
+              <div class="weather-hour">
+                <div class="hour-data">
+                  <img class="hour-icon" src="" alt="" />
+                  <p class="hour-time"></p>
+                </div>
+                <p class="hour-degrees"></p>
+              </div>
+              <div class="weather-hour">
+                <div class="hour-data">
+                  <img class="hour-icon" src="" alt="" />
+                  <p class="hour-time"></p>
+                </div>
+                <p class="hour-degrees"></p>
+              </div>
+              <div class="weather-hour">
+                <div class="hour-data">
+                  <img class="hour-icon" src="" alt="" />
+                  <p class="hour-time"></p>
+                </div>
+                <p class="hour-degrees"></p>
+              </div>
+              <div class="weather-hour">
+                <div class="hour-data">
+                  <img class="hour-icon" src="" alt="" />
+                  <p class="hour-time"></p>
+                </div>
+                <p class="hour-degrees"></p>
+              </div>
+              <div class="weather-hour">
+                <div class="hour-data">
+                  <img class="hour-icon" src="" alt="" />
+                  <p class="hour-time"></p>
+                </div>
+                <p class="hour-degrees"></p>
+              </div>
+              <div class="weather-hour">
+                <div class="hour-data">
+                  <img class="hour-icon" src="" alt="" />
+                  <p class="hour-time"></p>
+                </div>
+                <p class="hour-degrees"></p>
+              </div>
+              <div class="weather-hour">
+                <div class="hour-data">
+                  <img class="hour-icon" src="" alt="" />
+                  <p class="hour-time"></p>
+                </div>
+                <p class="hour-degrees"></p>
+              </div>
+              <div class="weather-hour">
+                <div class="hour-data">
+                  <img class="hour-icon" src="" alt="" />
+                  <p class="hour-time"></p>
+                </div>
+                <p class="hour-degrees"></p>
+              </div>
+              <div class="weather-hour">
+                <div class="hour-data">
+                  <img class="hour-icon" src="" alt="" />
+                  <p class="hour-time"></p>
+                </div>
+                <p class="hour-degrees"></p>
+              </div>
+              <div class="weather-hour">
+                <div class="hour-data">
+                  <img class="hour-icon" src="" alt="" />
+                  <p class="hour-time"></p>
+                </div>
+                <p class="hour-degrees"></p>
+              </div>
+              <div class="weather-hour">
+                <div class="hour-data">
+                  <img class="hour-icon" src="" alt="" />
+                  <p class="hour-time"></p>
+                </div>
+                <p class="hour-degrees"></p>
+              </div>
+              <div class="weather-hour">
+                <div class="hour-data">
+                  <img class="hour-icon" src="" alt="" />
+                  <p class="hour-time"></p>
+                </div>
+                <p class="hour-degrees"></p>
+              </div>
+              <div class="weather-hour">
+                <div class="hour-data">
+                  <img class="hour-icon" src="" alt="" />
+                  <p class="hour-time"></p>
+                </div>
+                <p class="hour-degrees"></p>
+              </div>
+              <div class="weather-hour">
+                <div class="hour-data">
+                  <img class="hour-icon" src="" alt="" />
+                  <p class="hour-time"></p>
+                </div>
+                <p class="hour-degrees"></p>
+              </div>
+              <div class="weather-hour">
+                <div class="hour-data">
+                  <img class="hour-icon" src="" alt="" />
+                  <p class="hour-time"></p>
+                </div>
+                <p class="hour-degrees"></p>
+              </div>
+              <div class="weather-hour">
+                <div class="hour-data">
+                  <img class="hour-icon" src="" alt="" />
+                  <p class="hour-time"></p>
+                </div>
+                <p class="hour-degrees"></p>
+              </div>
+              <div class="weather-hour">
+                <div class="hour-data">
+                  <img class="hour-icon" src="" alt="" />
+                  <p class="hour-time"></p>
+                </div>
+                <p class="hour-degrees"></p>
+              </div>
+              <div class="weather-hour">
+                <div class="hour-data">
+                  <img class="hour-icon" src="" alt="" />
+                  <p class="hour-time"></p>
+                </div>
+                <p class="hour-degrees"></p>
+              </div>
+              <div class="weather-hour">
+                <div class="hour-data">
+                  <img class="hour-icon" src="" alt="" />
+                  <p class="hour-time"></p>
+                </div>
+                <p class="hour-degrees"></p>
+              </div>
+              <div class="weather-hour">
+                <div class="hour-data">
+                  <img class="hour-icon" src="" alt="" />
+                  <p class="hour-time"></p>
+                </div>
+                <p class="hour-degrees"></p>
+              </div>
+              <div class="weather-hour">
+                <div class="hour-data">
+                  <img class="hour-icon" src="" alt="" />
+                  <p class="hour-time"></p>
+                </div>
+                <p class="hour-degrees"></p>
+              </div>
+              <div class="weather-hour">
+                <div class="hour-data">
+                  <img class="hour-icon" src="" alt="" />
+                  <p class="hour-time"></p>
+                </div>
+                <p class="hour-degrees"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!--End weather section-->
+    </main>
+    <!--End Main Section-->
+    <!--Start API Error-->
+    <section class="api-error hidden" aria-live="polite">
+      <div class="api__error--container">
+        <img class="api__error-icon" src="images/icon-error.svg" alt="" />
+        <h2 class="api__error--heading">Something went wrong</h2>
+        <p class="api__error--message">
+          We couldn't connect to the server (API error). Please try again in a
+          few moments
+        </p>
+        <button class="api__retry--button">
+          <img src="images/icon-retry.svg" alt="" />Retry
+        </button>
+      </div>
+    </section>
+    <!--End API Error-->
+    <script src="script.js"></script>
+  </body>
+</html>
