@@ -59,4 +59,4 @@ Overall, this project strengthened my ability to build a fully interactive, resp
 
 ## Acknowledgments
 
-A big thank you to anyone providing feedback on my [solution](). It definitely helps to find new ways to code and find easier solutions!
+A big thank you to anyone providing feedback on my [solution](https://www.frontendmentor.io/solutions/weather-app-with-autocomplete-units-and-api-vanilla-js-6bWoMM68WC). It definitely helps to find new ways to code and find easier solutions!
