@@ -529,6 +529,7 @@ async function showWeatherByLocation(location) {
     showDailyWeather(data);
     showHourlyMenu(data);
   } catch (error) {
+    console.error("Unable to get location", error);
     showApiError();
   }
 }
@@ -585,7 +586,7 @@ unitInputs.forEach((input) => {
 
 // Search button
 searchButton.addEventListener("click", () => {
-  let city = searchInput.value.trim().toLowerCase();
+  const city = searchInput.value.trim().toLowerCase();
 
   if (!city) {
     showNoResultsError();
@@ -603,7 +604,7 @@ searchButton.addEventListener("click", () => {
 // Search enter key
 searchInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
-    let city = searchInput.value.trim().toLowerCase();
+    const city = searchInput.value.trim().toLowerCase();
 
     if (!city) {
       showNoResultsError();
