@@ -121,7 +121,7 @@ async function getCitySuggestions(query) {
 
     return geoData.results;
   } catch (error) {
-    console.error("unable to get location");
+    console.error("unable to get location", error);
   }
 }
 
@@ -269,9 +269,9 @@ function renderSuggestions(results) {
   const suggestionData = results;
 
   for (let i = 0; i < suggestionData.length; i++) {
-    let suggestedCity = suggestionData[i].name;
-    let suggestedState = suggestionData[i].admin1;
-    let suggestedCountry = suggestionData[i].country;
+    const suggestedCity = suggestionData[i].name;
+    const suggestedState = suggestionData[i].admin1;
+    const suggestedCountry = suggestionData[i].country;
 
     const listItem = document.createElement("li");
     const button = document.createElement("button");
@@ -307,11 +307,11 @@ function showCurrentWeather(data) {
   });
 
   let currentTemp = data.weatherData.current.temperature_2m;
-  let weatherCode = data.weatherData.current.weathercode;
-  let weatherType = getWeatherCodeName(weatherCode);
-  let weatherIcon = getWeatherIcon(weatherType);
+  const weatherCode = data.weatherData.current.weathercode;
+  const weatherType = getWeatherCodeName(weatherCode);
+  const weatherIcon = getWeatherIcon(weatherType);
   let feelsLike = data.weatherData.current.apparent_temperature;
-  let humidity = data.weatherData.current.relative_humidity_2m;
+  const humidity = data.weatherData.current.relative_humidity_2m;
   let windSpeed = data.weatherData.current.wind_speed_10m;
   let windUnit = "km/h";
   let precipitation = data.weatherData.current.precipitation;
@@ -347,7 +347,9 @@ function showCurrentWeather(data) {
   )}<span>&deg;</span>`;
   weatherCurrentHumidity.innerHTML = `${humidity}%`;
   weatherCurrentWind.innerHTML = `${Math.round(windSpeed)} ${windUnit}`;
-  weatherCurrentPrecipitation.innerHTML = `${precipitation} ${precipitationUnits}`;
+  weatherCurrentPrecipitation.innerHTML = `${Math.round(
+    precipitation
+  )} ${precipitationUnits}`;
 }
 
 // Daily Weather
@@ -490,6 +492,7 @@ async function showWeather(city) {
     showDailyWeather(data);
     showHourlyMenu(data);
   } catch (error) {
+    console.error("Error showing weather:", error);
     showApiError();
   }
 }
@@ -626,4 +629,4 @@ retryButton.addEventListener("click", () => {
 
 /* ===== Load Default Weather ===== */
 
-showWeather("Berlin");
+showWeather("Columbus");
