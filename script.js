@@ -347,9 +347,16 @@ function showCurrentWeather(data) {
   )}<span>&deg;</span>`;
   weatherCurrentHumidity.innerHTML = `${humidity}%`;
   weatherCurrentWind.innerHTML = `${Math.round(windSpeed)} ${windUnit}`;
-  weatherCurrentPrecipitation.innerHTML = `${Math.round(
-    precipitation
-  )} ${precipitationUnits}`;
+
+  let formattedPrecipitation;
+
+  if (precipitationUnits === "in") {
+    formattedPrecipitation = precipitation.toFixed(2);
+  } else {
+    formattedPrecipitation = precipitation;
+  }
+
+  weatherCurrentPrecipitation.innerHTML = `${formattedPrecipitation} ${precipitationUnits}`;
 }
 
 // Daily Weather
