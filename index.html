@@ -24,6 +24,7 @@
       <div class="header__right">
         <button
           class="unit-menu"
+          type="button"
           aria-expanded="false"
           aria-controls="unit-panel"
         >
@@ -147,7 +148,7 @@
         <div class="weather-grid">
           <div class="weather__current">
             <div class="weather__current--info">
-              <h2 class="weather__current--location">
+              <h2 class="weather__current--location" aria-live="polite">
                 <span class="weather__current--city"></span>
                 <span class="weather__current--country"></span>
               </h2>
@@ -242,10 +243,12 @@
               <h3 class="weather__hourly--title">Hourly forecast</h3>
               <button
                 class="weather__hourly--menu"
+                type="button"
                 aria-expanded="false"
                 aria-controls="hourly-panel"
+                aria-label="Select forecast day"
               >
-                <p class="weather__hourly--label"></p>
+                <span class="weather__hourly--label"></span>
                 <img
                   class="hourly-dropdown-icon"
                   src="images/icon-dropdown.svg"

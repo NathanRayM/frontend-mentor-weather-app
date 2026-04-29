@@ -22,7 +22,6 @@ const weatherCurrentCity = document.querySelector(".weather__current--city");
 const weatherCurrentCountry = document.querySelector(
   ".weather__current--country"
 );
-const weatherCurrentState = document.querySelector(".weather__current--state");
 const weatherCurrentDate = document.querySelector(".weather__current--date");
 const weatherCurrentWeatherIcon = document.querySelector(".forcast-image");
 const weatherCurrentTemp = document.querySelector(".current-temp");
@@ -267,7 +266,7 @@ function renderSuggestions(results) {
 
   searchSuggestionPanel.classList.remove("hidden");
 
-  let suggestionData = results;
+  const suggestionData = results;
 
   for (let i = 0; i < suggestionData.length; i++) {
     let suggestedCity = suggestionData[i].name;
